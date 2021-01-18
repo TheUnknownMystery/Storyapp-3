@@ -3,12 +3,34 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { createAppContainer } from 'react-navigation'
 import Header2 from "../components/Header2"
+import db from '../config'
+import firebase from 'firebase'
 
 export default class WriteStoryScreen extends React.Component {
 
-    submitStory = () => {
+   
+    submitStory = async () => {
 
-       console.log("working")
+
+        db.collection("Author").doc("A-0001").update({
+
+            'authorOfStory': this.state.author
+
+        })
+
+        db.collection("Story").doc('S-0003').update({
+
+         "Story": this.state.body
+
+
+        })
+
+        db.collection("Title").doc("T-0002").update({
+
+
+       'TitleOfStory': this.state.title
+
+        })
     }
 
     constructor() {
@@ -29,10 +51,10 @@ export default class WriteStoryScreen extends React.Component {
                 <TextInput
 
                     onChangeText={(text) => {
-
+                        //console.log(this.state.author)
                         this.setState({
 
-                         author: text
+                            author: text
 
                         })
 
@@ -74,7 +96,7 @@ export default class WriteStoryScreen extends React.Component {
 
                 <TouchableOpacity style={{ borderWidth: 6, borderColor: 'lightgrey', height: 60, width: 300, borderRadius: 20, backgroundColor: 'grey', alignSelf: 'center', marginTop: 60 }} onPress={this.submitStory}>
 
-                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 30, alignSelf: 'center', marginTop: 4}}>Submit</Text>
+                    <Text style={{ color: 'white', fontWeight: 'bold', fontSize: 30, alignSelf: 'center', marginTop: 4 }}>Submit</Text>
 
                 </TouchableOpacity>
             </View>
